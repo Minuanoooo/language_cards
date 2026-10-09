@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash cards</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div id="main" class="container">
+        <h1>Ваши карточки</h1>
+        <div class="flashcard">
+            <div class="card-inner">
+                <div class="front"></div>
+                <div class="back"></div>
+            </div>
+        </div>
+        <button id="previous" class="btn">Previous</button>
+        <button id="next" class="btn">Next</button>
+        <button id="add_card" class="btn">Add card</button>
+        <button id="delete" class="btn">Delete</button>
+    </div>
+   
+    <div id="add-form" class="add-form hidden">
+        <h2>Новая карточка</h2>
+
+        <input
+            type="text"
+            id="front-input"
+            placeholder="Слово"
+        >
+
+        <input
+            type="text"
+            id="back-input"
+            placeholder="Перевод"
+        >
+
+        <button id="save-card" class="btn">Save</button>
+        <button id="cancel-add" class="btn">Cancel</button>
+    </div>
+
+    <script src="/static/script.js"></script>   
+</body>
+</html>
