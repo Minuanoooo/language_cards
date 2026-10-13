@@ -31,18 +31,17 @@ fetch("/cards")
 
 // Отображение текущей карточки
 function showCard() {
+    const front = document.querySelector(".front");
+    const back = document.querySelector(".back");
+    cardInner.classList.remove("flipped");
     if (cards.length === 0) {
+        front.textContent = "Добавь первую карточку";
+        back.textContent = "";
         return;
     }
 
-    const front = document.querySelector(".front");
-    const back = document.querySelector(".back");
-
     front.textContent = cards[currentCard].front;
     back.textContent = cards[currentCard].back;
-
-    // Новая карточка всегда лицевой стороной
-    cardInner.classList.remove("flipped");
 }
 
 // Следующая карточка
@@ -82,10 +81,26 @@ addButton.addEventListener("click", () => {
 cancelButton.addEventListener("click", () => {
     addForm.classList.add("hidden");
 });
-
-const saveButton = document.querySelector("#save-card");
 const frontInput = document.querySelector("#front-input");
 const backInput = document.querySelector("#back-input");
+const editButton = document.querySelector("#edit-card");
+let isEditing = false;
+let editingCardId = null;
+
+editButton.addEventListener("click", () => {
+    if (cards.length === 0) return;
+
+    isEditing = true;
+    editingCardId = cards[currentCard].id;
+
+    frontInput.value = cards[currentCard].front;
+    backInput.value = cards[currentCard].back;
+
+    addForm.classList.remove("hidden");
+});
+
+const saveButton = document.querySelector("#save-card");
+
 
 saveButton.addEventListener("click", () => {
     const front = frontInput.value.trim();
@@ -96,26 +111,41 @@ saveButton.addEventListener("click", () => {
         return;
     }
 
-    fetch("/cards", {
-        method: "POST",
+    const url = isEditing
+        ? `/cards/${editingCardId}`
+        : "/cards";
+
+    const method = isEditing ? "PUT" : "POST";
+
+    fetch(url, {
+        method: method,
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            front: front,
-            back: back
-        })
+        body: JSON.stringify({ front, back })
     })
         .then(response => {
             if (!response.ok) {
                 throw new Error("Не удалось сохранить карточку");
             }
-
             return response.json();
         })
-        .then(newCard => {
-            cards.push(newCard);
-            currentCard = cards.length - 1;
+        .then(savedCard => {
+            if (isEditing) {
+                const index = cards.findIndex(
+                    card => card.id === editingCardId
+                );
+
+                if (index !== -1) {
+                    cards[index] = savedCard;
+                }
+            } else {
+                cards.push(savedCard);
+                currentCard = cards.length - 1;
+            }
+
+            isEditing = false;
+            editingCardId = null;
 
             showCard();
 
@@ -129,3 +159,31 @@ saveButton.addEventListener("click", () => {
         });
 });
 
+const deleteButton = document.querySelector("#delete");
+
+deleteButton.addEventListener("click", () => {
+    if (cards.length === 0) return;
+
+    const cardId = cards[currentCard].id;
+
+    fetch(`/cards/${cardId}`, {
+        method: "DELETE"
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Не удалось удалить карточку");
+            }
+
+            cards.splice(currentCard, 1);
+
+            if (currentCard >= cards.length) {
+                currentCard--;
+            }
+
+            showCard();
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Ошибка при удалении карточки");
+        });
+});
