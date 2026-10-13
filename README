@@ -1,0 +1,79 @@
+# Language Cards
+
+A simple flashcard web application for learning languages. Create cards with a word or phrase on the front and its translation or explanation on the back.
+
+## Features
+
+- Create flashcards
+- Flip cards to see the answer
+- Navigate between cards
+- Edit existing cards
+- Delete cards
+- Store cards in an SQLite database
+
+## Tech Stack
+
+- **Backend:** Python, FastAPI
+- **Database:** SQLite, SQLAlchemy
+- **Frontend:** HTML, CSS, JavaScript
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Minuanoooo/language_cards.git
+   cd language_cards
+   ```
+
+2. Create and activate a virtual environment:
+
+   **Windows**
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+
+   **Linux / macOS**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Run the application:
+
+   ```bash
+   uvicorn main:app --reload
+   ```
+
+5. Open the application in your browser:
+
+   http://127.0.0.1:8000
+
+API documentation is available at http://127.0.0.1:8000/docs
+
+## Project Structure
+
+```text
+language_cards/
+├── static/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+├── main.py
+├── database.py
+├── models.py
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+## Live Demo
+
+https://language-cards-6vh3.onrender.com/
