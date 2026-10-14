@@ -1,20 +1,13 @@
 
-    
-  
 :root {
-    color-scheme: light;
-    --page: #f4f6f3;
-    --surface: #ffffff;
-    --surface-soft: #eef3ef;
-    --text: #25332e;
-    --muted: #74817b;
-    --border: #e0e7e2;
-    --accent: #527968;
-    --accent-hover: #426655;
-    --accent-soft: #e5eee8;
-    --danger: #a85f5b;
-    --danger-soft: #f8eeec;
-    --shadow: 0 18px 45px rgba(39, 59, 49, 0.08);
+    --bg: #f4f6f4;
+    --text: #29352e;
+    --border: #cbd5cd;
+    --green: #426b52;
+    --green-hover: #345640;
+    --light-green: #e8f0e9;
+    --red: #a94a4a;
+    --light-red: #f9eded;
 }
 
 * {
@@ -22,61 +15,125 @@
 }
 
 body {
-    min-height: 100vh;
     margin: 0;
-    padding: 40px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    background: var(--page);
+    padding: 30px 16px;
+    min-height: 100vh;
+    background: var(--bg);
     color: var(--text);
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    line-height: 1.5;
-}
-
-button,
-input {
-    font: inherit;
+    font-family: Arial, sans-serif;
 }
 
 .container {
-    width: min(100%, 540px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    padding: 36px;
-    background: var(--surface);
-    border: 1px solid rgba(224, 231, 226, 0.9);
-    border-radius: 28px;
-    box-shadow: var(--shadow);
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 28px;
+    background: #fff;
+    border: 1px solid #e1e7e1;
+    border-radius: 16px;
+    box-shadow: 0 6px 22px rgba(35, 55, 40, 0.06);
 }
 
-.container h1 {
-    margin: 0 0 10px;
-    font-size: clamp(1.65rem, 4vw, 2rem);
-    line-height: 1.2;
-    font-weight: 650;
-    letter-spacing: -0.04em;
+h1 {
+    margin-top: 0;
+    margin-bottom: 24px;
     text-align: center;
+    font-size: 28px;
 }
 
+/* Общий стиль кнопок */
+button {
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background: #f0f4f0;
+    border-color: #91a797;
+}
+
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid #b5cdb9;
+    outline-offset: 2px;
+}
+
+/* Переключение карточек */
+#previous,
+#next {
+    background: var(--light-green);
+    border-color: #b9cbbd;
+    color: #355440;
+}
+
+#previous:hover,
+#next:hover {
+    background: #dce9de;
+    border-color: #8da993;
+}
+
+/* Добавление и сохранение — основные действия */
+#add_card,
+#save-card {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+}
+
+#add_card:hover,
+#save-card:hover {
+    background: var(--green-hover);
+    border-color: var(--green-hover);
+}
+
+/* Редактирование */
+#edit-card {
+    background: #fff;
+    border-color: #9aafa0;
+    color: var(--green);
+}
+
+#edit-card:hover {
+    background: var(--light-green);
+}
+
+/* Удаление — отдельный предупреждающий цвет */
+#delete {
+    background: var(--light-red);
+    border-color: #e2bcbc;
+    color: var(--red);
+}
+
+#delete:hover {
+    background: #f3dddd;
+    border-color: #cf9999;
+}
+
+/* Карточка */
 .flashcard {
     width: 100%;
-    max-width: 360px;
-    height: 230px;
-    margin: 4px 0 10px;
-    perspective: 1200px;
+    min-height: 220px;
+    margin-bottom: 22px;
+    perspective: 1000px;
     cursor: pointer;
 }
 
 .card-inner {
     position: relative;
     width: 100%;
-    height: 100%;
+    min-height: 220px;
     transform-style: preserve-3d;
-    transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition: transform 0.5s ease;
+}
+
+.card-inner.flipped {
+    transform: rotateY(180deg);
 }
 
 .front,
@@ -86,15 +143,88 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 28px;
-    overflow-wrap: anywhere;
+    min-height: 220px;
+    padding: 24px;
+    border: 1px solid #cbd9ce;
+    border-radius: 14px;
     text-align: center;
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
-    font-weight: 600;
-    line-height: 1.4;
-    background: var(--surface-soft);
-    border: 1px solid #e1e9e3;
-    border-radius: 22px;
-    box-shadow: 0 8px 22px rgba(39, 59, 49, 0.05);
+    font-size: 24px;
+    overflow-wrap: anywhere;
+    backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+}
 
+.front {
+    background: #edf4ee;
+    color: #304b37;
+}
+
+.back {
+    background: #f7f0e5;
+    border-color: #e4d5bb;
+    color: #5c4931;
+    transform: rotateY(180deg);
+}
+
+/* Форма добавления карточки */
+.add-form {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 18px;
+    border: 1px solid #d8e1d9;
+    border-radius: 12px;
+    background: #f8faf8;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text);
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: var(--green);
+    outline: none;
+}
+
+input::placeholder {
+    color: #8a958d;
+}
+
+#cancel-add {
+    background: #fff;
+    border-color: var(--border);
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 16px 10px;
+    }
+
+    .container {
+        padding: 18px 14px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .front,
+    .back {
+        padding: 16px;
+        font-size: 20px;
+    }
+
+    button {
+        padding: 9px 12px;
+    }
+}
