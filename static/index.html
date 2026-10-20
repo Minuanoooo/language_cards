@@ -3,45 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flash cards</title>
+    <meta name="color-scheme" content="light">
+    <title>Language Cards</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
-    <div id="main" class="container">
-        <h1>Ваши карточки</h1>
-        <div class="flashcard">
-            <div class="card-inner">
-                <div class="front"></div>
-                <div class="back"></div>
+    <main class="container">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">LANGUAGE CARDS</p>
+                <h1>Ваши карточки</h1>
+                <p class="subtitle">Учите слова в удобном темпе</p>
             </div>
-        </div>
-        <button id="previous" class="btn">Previous</button>
-        <button id="next" class="btn">Next</button>
-        <button id="add_card" class="btn">Add card</button>
-        <button id="edit-card" class="btn">Edit</button>
-        <button id="delete" class="btn">Delete</button>
-    </div>
-   
-    <div id="add-form" class="add-form hidden">
-        <h2>Новая карточка</h2>
+            <button id="logout" class="btn btn-secondary hidden" type="button">Выйти</button>
+        </header>
 
-        <input
-            type="text"
-            id="front-input"
-            placeholder="Слово"
-        >
+        <div id="message" class="message hidden" role="status" aria-live="polite"></div>
 
-        <input
-            type="text"
-            id="back-input"
-            placeholder="Перевод"
-        >
+        <section id="auth-panel" class="auth-panel" aria-labelledby="auth-title">
+            <h2 id="auth-title">Вход в аккаунт</h2>
+            <p class="section-hint">Войдите, чтобы открыть свои карточки, или создайте аккаунт.</p>
+            <div class="auth-tabs" role="group" aria-label="Выбор действия">
+                <button id="show-login" class="btn btn-tab active" type="button">Войти</button>
+                <button id="show-register" class="btn btn-tab" type="button">Регистрация</button>
+            </div>
+            <form id="auth-form" class="form-grid">
+                <label for="auth-email">Электронная почта</label>
+                <input type="email" id="auth-email" autocomplete="email" placeholder="you@example.com" required>
+                <label for="auth-password">Пароль</label>
+                <input type="password" id="auth-password" autocomplete="current-password" placeholder="Ваш пароль" required>
+                <button id="auth-submit" class="btn btn-primary" type="submit">Войти</button>
+            </form>
+        </section>
 
-        <button id="save-card" class="btn">Save</button>
-        <button id="cancel-add" class="btn">Cancel</button>
-    </div>
+        <section id="main" class="cards-panel hidden" aria-label="Карточки">
+            <div class="flashcard" role="button" tabindex="0" aria-label="Перевернуть карточку">
+                <div class="card-inner">
+                    <div class="front">Загрузка карточек…</div>
+                    <div class="back"></div>
+                </div>
+            </div>
 
-    <script src="/static/script.js"></script>   
+            <p id="card-counter" class="card-counter"></p>
+
+            <div class="button-row navigation">
+                <button id="previous" class="btn btn-secondary" type="button">← Назад</button>
+                <button id="next" class="btn btn-secondary" type="button">Вперёд →</button>
+            </div>
+
+            <div class="button-row card-actions">
+                <button id="add_card" class="btn btn-primary" type="button">Добавить</button>
+                <button id="edit-card" class="btn btn-secondary" type="button">Изменить</button>
+                <button id="delete" class="btn btn-danger" type="button">Удалить</button>
+            </div>
+
+            <form id="add-form" class="add-form hidden">
+                <h2 id="card-form-title">Новая карточка</h2>
+                <label for="front-input">Лицевая сторона</label>
+                <input type="text" id="front-input" placeholder="Слово или вопрос" maxlength="500" required>
+                <label for="back-input">Обратная сторона</label>
+                <input type="text" id="back-input" placeholder="Перевод или ответ" maxlength="500" required>
+                <div class="button-row">
+                    <button id="save-card" class="btn btn-primary" type="submit">Сохранить</button>
+                    <button id="cancel-add" class="btn btn-secondary" type="button">Отмена</button>
+                </div>
+            </form>
+        </section>
+        <footer>Ваши слова — ваш прогресс.</footer>
+    </main>
+    <script src="/static/script.js"></script>
 </body>
 </html>
