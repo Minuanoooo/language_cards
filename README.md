@@ -1,96 +1,111 @@
 # Language Cards
 
-A simple web application for learning languages with flashcards. Each card contains a word or phrase on the front and its translation or explanation on the back.
-
-## Technologies
-
-- Python
-- FastAPI
-- SQLAlchemy
-- PostgreSQL
-- HTML
-- CSS
-- JavaScript
+A web application for learning languages with digital flashcards. Users can register, log in, and manage their own cards.
 
 ## Features
 
-- Create flashcards with words, phrases, and translations
-- Flip cards to reveal the answer
-- Navigate between flashcards
-- Edit existing flashcards
-- Delete flashcards
-- Store flashcards in a PostgreSQL database
-- Persistent data storage in the deployed application
+- **User Authentication** — registration and login with password hashing and JWT authentication.
+- **Personal Flashcards** — each user can access and manage only their own cards.
+- **CRUD Operations** — create, view, update, and delete flashcards.
+- **Interactive Interface** — flip cards to reveal translations and navigate between them.
+- **REST API** — backend endpoints built with FastAPI.
+- **Persistent Storage** — PostgreSQL database managed through SQLAlchemy.
 
-## Installation
+## Tech Stack
 
-1. Clone the repository:
+- **Python**
+- **FastAPI**
+- **SQLAlchemy**
+- **PostgreSQL**
+- **Pydantic**
+- **JWT** — authentication
+- **Passlib + bcrypt** — password hashing
+- **HTML, CSS, JavaScript**
+- **Uvicorn**
 
-   ```bash
-   git clone https://github.com/Minuanoooo/language_cards.git
-   cd language_cards
-   ```
+## Live Demo
 
-2. Create and activate a virtual environment:
+[Try Language Cards](https://language-cards-6vh3.onrender.com/)
 
-   **Windows**
+## Installation and Setup
 
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate
-   ```
+### 1. Clone the repository
 
-   **Linux / macOS**
+```bash
+git clone https://github.com/Minuanoooo/language_cards.git
+cd language_cards
+```
 
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
+### 2. Create a virtual environment
 
-3. Install dependencies:
+```bash
+python -m venv .venv
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+Activate it on Windows:
 
-4. Set the `DATABASE_URL` environment variable to your PostgreSQL connection URL.
+```bash
+.venv\Scripts\activate
+```
 
-5. Run the application:
+### 3. Install dependencies
 
-   ```bash
-   uvicorn main:app --reload
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-6. Open the application at:
+### 4. Configure environment variables
 
-   ```text
-   http://127.0.0.1:8000
-   ```
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL=your_postgresql_database_url
+SECRET_KEY=your_secret_key
+```
+
+Use your own PostgreSQL connection URL and a randomly generated secret key. Never commit `.env` to GitHub.
+
+### 5. Run the application
+
+```bash
+uvicorn main:app --reload
+```
+
+Open http://127.0.0.1:8000 in your browser.
+
+Interactive API documentation is available at http://127.0.0.1:8000/docs.
 
 ## API Endpoints
 
-| Method | Endpoint           | Description             |
-| ------ | ------------------ | ----------------------- |
-| GET    | `/cards`           | Retrieve all flashcards |
-| POST   | `/cards`           | Create a new flashcard  |
-| PUT    | `/cards/{card_id}` | Update a flashcard      |
-| DELETE | `/cards/{card_id}` | Delete a flashcard      |
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/users` | Register a new user |
+| POST | `/login` | Authenticate a user |
+| GET | `/cards` | Get the authenticated user's cards |
+| POST | `/cards` | Create a flashcard |
+| PUT | `/cards/{card_id}` | Update a flashcard |
+| DELETE | `/cards/{card_id}` | Delete a flashcard |
+
+Card operations require authentication.
 
 ## Project Structure
 
 ```text
 language_cards/
-├── main.py
-├── database.py
-├── models.py
+├── main.py          # FastAPI application and API endpoints
+├── auth.py          # JWT authentication
+├── models.py        # SQLAlchemy models
+├── database.py      # Database configuration
+├── requirements.txt # Python dependencies
 ├── static/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-├── requirements.txt
-└── README.md
+│   ├── index.html   # Main page
+│   ├── style.css    # Styling
+│   └── script.js    # Frontend logic
+└── .gitignore
 ```
 
-## Live Demo
+## Purpose
 
-[https://language-cards-6vh3.onrender.com/](https://language-cards-6vh3.onrender.com/)
+This project was built to practice backend development with Python and FastAPI, database integration, authentication, and frontend-backend communication.
+
+It demonstrates how to build a REST API with user-specific data and persistent storage.
