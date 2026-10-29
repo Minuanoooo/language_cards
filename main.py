@@ -82,8 +82,12 @@ def card_put(
 
 @app.post("/users")
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    new_user = User(email=user.email)
-    new_user.get_password_hash(user.password)
+    #new_user = User(email=user.email)
+    #new_user.get_password_hash(user.password)
+    new_user = User(
+    email=user.email,
+    password=user.password
+    )
     existing_user = db.query(User).filter(User.email == user.email).first()
     if not existing_user:
         db.add(new_user)
@@ -96,6 +100,8 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
 @app.post("/login")
 def login_user(user: UserCreate, db: Session = Depends(get_db)):
     existing_user = db.query(User).filter(User.email == user.email).first()
-    if existing_user and existing_user.verify_password(user.password):
-        return {"access_token": create_access_token(existing_user.id),"token_type": "bearer",}
+    #if existing_user and existing_user.verify_password(user.password):
+        #return {"access_token": create_access_token(existing_user.id),"token_type": "bearer",}
+    if existing_user and existing_user.password == user.password:
+        return create_access_token(existing_user.id)
     raise HTTPException(status_code=401, detail="Unauthorized")
