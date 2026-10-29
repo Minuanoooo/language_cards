@@ -103,5 +103,5 @@ def login_user(user: UserCreate, db: Session = Depends(get_db)):
     #if existing_user and existing_user.verify_password(user.password):
         #return {"access_token": create_access_token(existing_user.id),"token_type": "bearer",}
     if existing_user and existing_user.password == user.password:
-        return create_access_token(existing_user.id)
+        return {"access_token": create_access_token(existing_user.id),"token_type": "bearer"}
     raise HTTPException(status_code=401, detail="Unauthorized")
